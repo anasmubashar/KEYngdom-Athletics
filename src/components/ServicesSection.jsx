@@ -1,166 +1,139 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ASSETS } from '../assets';
 
+const SERVICES_DATA = [
+  {
+    id: 'sports-training',
+    index: '01',
+    kicker: 'FOUNDATIONAL MECHANICS',
+    title: 'SPORTS TRAINING',
+    icon: ASSETS.serviceSportsTraining,
+    summary:
+      'Multi-sport speed, explosive power, fast-twitch agility, and biomechanical optimization using calibrated timing equipment.',
+    capsules: ['Laser 40yd & 10yd Split Timing', 'Force-Plate Ground Contact Metrics', 'Deceleration & ACL Risk Screening'],
+  },
+  {
+    id: 'coaching',
+    index: '02',
+    kicker: 'POSITIONAL MASTERY',
+    title: 'DEDICATED COACHING',
+    icon: ASSETS.serviceDedicatedCoaching,
+    summary:
+      'Micro-rep technical skill development led by former collegiate tacticians with live read-and-react drills.',
+    capsules: ['Position-Isolated Technical Drills', 'Game-Film Breakdown & Scheme Literacy', 'High-Pressure Situational Labs'],
+  },
+  {
+    id: 'mentoring',
+    index: '03',
+    kicker: 'HOLISTIC FORTITUDE',
+    title: '1-ON-1 MENTORING',
+    icon: ASSETS.serviceMentoring,
+    summary:
+      'Mindset discipline, emotional regulation under competitive pressure, and weekly academic review for long-term growth.',
+    capsules: ['Weekly GPA & NCAA Eligibility Audit', 'Mental Performance Training', 'Adversity Protocols & Recovery Support'],
+  },
+  {
+    id: 'college-advocacy',
+    index: '04',
+    kicker: 'RECRUITMENT EXECUTION',
+    title: 'COLLEGE ADVOCACY',
+    icon: ASSETS.serviceCollegeAdvocacy,
+    summary:
+      'End-to-end management of your recruiting pathway, verified HUDL curation, and direct relationships across collegiate programs.',
+    capsules: ['Direct Coach & Coordinator Submissions', 'Complete NCAA 16-Core Course Audit', 'Official Visit Prep & Negotiation'],
+  },
+  {
+    id: 'summer-camps',
+    index: '05',
+    kicker: 'HIGH-EXPOSURE IMMERSION',
+    title: 'SUMMER CAMPS',
+    icon: ASSETS.serviceSummerCamps,
+    summary:
+      'Intensive multi-day camps featuring standardized combine testing, live showcase competition, and scout-verified certification.',
+    capsules: ['Regional Combine Leaderboards', 'Scout-Verified Athletic Certificates', 'Live 7v7 / Showcase Match Play'],
+  },
+];
+
 export default function ServicesSection() {
+  const [activeRow, setActiveRow] = useState(null);
+
+  const handleScrollToIntake = (serviceName) => {
+    const el = document.getElementById('contact');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const toggleRow = (idx) => {
+    setActiveRow(activeRow === idx ? null : idx);
+  };
+
   return (
-    <section id="services" className="services-section">
+    <section id="services" className="services-ledger-section">
       <div className="site-container">
         {/* Section Header */}
-        <div className="section-header-split">
-          <div className="section-title-wrap">
-            <div className="mono-tag">
-              <img src={ASSETS.tagServices} alt="" className="mono-tag-icon" />
-              <span>PROGRAM SUITE</span>
+        <div className="services-header-wrap">
+          <div className="services-title-col">
+            <div className="services-mono-kicker">
+              <span>PROGRAM MATRIX</span>
             </div>
-            <h2 className="section-title">CORE SERVICES</h2>
+            <h2 className="services-heading">CORE SERVICES</h2>
           </div>
-
         </div>
 
-        {/* 5-Card Matrix Grid */}
-        <div className="services-grid">
-          {/* Service 1 */}
-          <div className="service-card">
-            <div className="service-card-top">
-              <div className="service-icon-box">
-                <img src={ASSETS.serviceSportsTraining} alt="" className="service-icon" />
-              </div>
-              <span className="service-number">01 //</span>
-            </div>
-            <span className="service-kicker">FOUNDATIONAL MECHANICS</span>
-            <h3 className="service-name">SPORTS TRAINING</h3>
-            <p className="service-desc">
-              Multi-sport speed, explosive power, fast-twitch agility, and sport-specific biomechanical optimization using calibrated timing equipment.
-            </p>
-            <div className="service-features">
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Laser-timed 40-yd dash &amp; shuttle splits</span>
-              </div>
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Force-plate power output calibration</span>
-              </div>
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Deceleration &amp; hip-cross mechanics for cutting</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Service 2 */}
-          <div className="service-card">
-            <div className="service-card-top">
-              <div className="service-icon-box">
-                <img src={ASSETS.serviceDedicatedCoaching} alt="" className="service-icon" />
-              </div>
-              <span className="service-number">02 //</span>
-            </div>
-            <span className="service-kicker">POSITIONAL MASTERY</span>
-            <h3 className="service-name">DEDICATED COACHING</h3>
-            <p className="service-desc">
-              Micro-rep skill development led by former collegiate tacticians. Positional IQ, route precision, defensive leverage, and live read-and-react drills.
-            </p>
-            <div className="service-features">
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Position-specific technique breakdown</span>
-              </div>
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Open-field leverage &amp; boundary coverage</span>
-              </div>
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>High-pressure situational live scenarios</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Service 3 */}
-          <div className="service-card">
-            <div className="service-card-top">
-              <div className="service-icon-box">
-                <img src={ASSETS.serviceMentoring} alt="" className="service-icon" />
-              </div>
-              <span className="service-number">03 //</span>
-            </div>
-            <span className="service-kicker">HOLISTIC FORTITUDE</span>
-            <h3 className="service-name">1-ON-1 MENTORING</h3>
-            <p className="service-desc">
-              Mindset discipline, emotional regulation under competitive pressure, weekly academic review, and leadership accountability for long-term growth.
-            </p>
-            <div className="service-features">
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Weekly 1-on-1 performance counseling</span>
-              </div>
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Grade tracking &amp; study habit auditing</span>
-              </div>
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Guided preparation for coach &amp; scout interviews</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Service 4: Spans 2 columns */}
-          <div className="service-card service-card-wide">
-            <div className="wide-card-left">
-              <div className="service-card-top">
-                <div className="service-icon-box">
-                  <img src={ASSETS.serviceCollegeAdvocacy} alt="" className="service-icon" />
+        {/* Editorial Architectural Ledger (Non-Card Strip) */}
+        <div className="services-ledger-table" role="list">
+          {SERVICES_DATA.map((service, idx) => {
+            const isExpanded = activeRow === idx;
+            return (
+              <div
+                key={service.id}
+                role="listitem"
+                className={`services-ledger-row ${isExpanded ? 'row-expanded' : ''}`}
+                onClick={() => toggleRow(idx)}
+              >
+                {/* Left: Index + Gold Icon + Title */}
+                <div className="row-brand-col">
+                  <div className="row-index-badge">{service.index}</div>
+                  <div className="row-icon-box">
+                    <img src={service.icon} alt="" className="row-service-icon" />
+                  </div>
+                  <div className="row-headings">
+                    <span className="row-kicker">{service.kicker}</span>
+                    <h3 className="row-title">{service.title}</h3>
+                  </div>
                 </div>
-                <span className="service-number">04 //</span>
-              </div>
-              <span className="service-kicker">RECRUITMENT EXECUTION</span>
-              <h3 className="service-name">COLLEGE ADVOCACY</h3>
-              <p className="service-desc">
-                End-to-end management of your collegiate recruiting pathway. We cut through the noise with verified HUDL highlight curation, NCAA Eligibility Center filing, and direct staff relationships across Power 4, Group of 5, and Ivy institutions.
-              </p>
-            </div>
-            <div className="wide-card-right">
-              <div className="feature-line-wide">
-                <img src={ASSETS.checkAdvocacy} alt="" className="feature-check-wide" />
-                <span>Direct representation to verified college coaching staffs</span>
-              </div>
-              <div className="feature-line-wide">
-                <img src={ASSETS.checkAdvocacy} alt="" className="feature-check-wide" />
-                <span>Complete NCAA Eligibility Center audit &amp; compliance management</span>
-              </div>
-              <div className="feature-line-wide">
-                <img src={ASSETS.checkAdvocacy} alt="" className="feature-check-wide" />
-                <span>Tailored target school recruitment radar &amp; outreach campaigns</span>
-              </div>
-            </div>
-          </div>
 
-          {/* Service 5 */}
-          <div className="service-card">
-            <div className="service-card-top">
-              <div className="service-icon-box">
-                <img src={ASSETS.serviceSummerCamps} alt="" className="service-icon" />
+                {/* Center: Distilled Summary & Key Deliverable Capsules */}
+                <div className="row-content-col">
+                  <p className="row-summary-text">{service.summary}</p>
+                  <div className="row-capsules-wrap">
+                    {service.capsules.map((capsule, cIdx) => (
+                      <span key={cIdx} className="services-capsule-tag">
+                        {capsule}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right: Direct Module Action */}
+                <div className="row-action-col">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleScrollToIntake(service.title);
+                    }}
+                    className="row-apply-btn"
+                    aria-label={`Apply for ${service.title}`}
+                  >
+                    <span>ENROLL MODULE</span>
+                    <span className="row-arrow">→</span>
+                  </button>
+                </div>
               </div>
-              <span className="service-number">05 //</span>
-            </div>
-            <span className="service-kicker">HIGH-EXPOSURE IMMERSION</span>
-            <h3 className="service-name">SUMMER CAMPS</h3>
-            <p className="service-desc">
-              Intensive multi-day camps featuring standardized combine testing, live 7v7 / showcase scrimmages, verified metric publishing, and collegiate clinician instruction.
-            </p>
-            <div className="service-features">
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Regional combine metric recording</span>
-              </div>
-              <div className="feature-line">
-                <img src={ASSETS.checkSmall} alt="" className="feature-check" />
-                <span>Direct evaluation from collegiate clinicians</span>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -3,10 +3,10 @@ import { ASSETS } from '../assets';
 
 const NAV_ITEMS = [
   { id: 'overview', label: 'OVERVIEW' },
-  { id: 'who-we-are', label: 'WHO WE ARE' },
+  { id: 'philosophy', label: 'PHILOSOPHY' },
   { id: 'services', label: 'SERVICES' },
-  { id: 'approach', label: 'THE APPROACH' },
-  { id: 'featured-athletes', label: 'FEATURED ATHLETES' },
+  { id: 'pillars', label: 'THE 5 PILLARS' },
+  { id: 'athletes', label: 'ATHLETES' },
   { id: 'contact', label: 'CONTACT' },
 ];
 
@@ -14,7 +14,7 @@ export default function Navbar({ onOpenDossier }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('overview');
 
-  // Close mobile menu on resize to desktop
+  // Close mobile drawer on desktop breakpoint resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1100) {
@@ -25,18 +25,24 @@ export default function Navbar({ onOpenDossier }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Scroll spy: detect which section is in view on scroll
+  // Smooth scroll spy detecting which section is active
   useEffect(() => {
     const sectionIds = NAV_ITEMS.map((item) => item.id);
 
     const handleScroll = () => {
-      // If user has scrolled near bottom of page, activate contact section
-      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 80) {
+      // Top of page activates overview
+      if (window.scrollY < 150) {
+        setActiveSection('overview');
+        return;
+      }
+
+      // Bottom of page activates contact section
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100) {
         setActiveSection('contact');
         return;
       }
 
-      const headerOffset = 180; // trigger point slightly below sticky header
+      const headerOffset = 180;
       let currentActive = 'overview';
 
       for (const id of sectionIds) {
@@ -53,7 +59,7 @@ export default function Navbar({ onOpenDossier }) {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // run once on mount
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -61,34 +67,40 @@ export default function Navbar({ onOpenDossier }) {
   const scrollTo = (id) => {
     setActiveSection(id);
     setMobileMenuOpen(false);
+    if (id === 'overview') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
-      const yOffset = -70; // header height offset
+      const yOffset = -75;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
   return (
-    <header className="site-header">
-      <div className="site-container nav-container">
-        {/* Brand Logo */}
+    <header className="redesign-header">
+      <div className="site-container redesign-nav-inner">
+        {/* Brand Logo Component with SVG Crest */}
         <a 
           href="#overview" 
           onClick={(e) => { e.preventDefault(); scrollTo('overview'); }} 
-          className="nav-brand"
+          className="brand-logo-link"
+          aria-label="KEYngdom Athletics Home"
         >
-          <div className="nav-logo-box">
-            <img src={ASSETS.logo} alt="KEYngdom Athletics Logo" className="nav-logo-img" />
-          </div>
-          <div className="nav-brand-text">
-            <span className="brand-name">KEYNGDOM</span>
-            <span className="brand-sub">ATHLETICS</span>
+          <img src={ASSETS.logoCrestHeader} alt="KEYngdom Crest" className="brand-crest-img" />
+          <div className="brand-text-block">
+            <span className="brand-name-split">
+              <span className="brand-key">KEY</span>
+              <span className="brand-gold">NGDOM</span>
+            </span>
+            <span className="brand-sub-tag">ATHLETICS ARCHITECTURE</span>
           </div>
         </a>
 
-        {/* Desktop Navigation Links with Active Scroll Spy */}
-        <nav className="desktop-nav" aria-label="Main Navigation">
+        {/* Desktop Streamlined Navigation */}
+        <nav className="streamlined-nav desktop-only" aria-label="Main Navigation">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.id}
@@ -97,37 +109,25 @@ export default function Navbar({ onOpenDossier }) {
                 e.preventDefault();
                 scrollTo(item.id);
               }}
-              className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+              className={`nav-text-link ${activeSection === item.id ? 'active' : ''}`}
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        {/* Action Controls */}
-        <div className="nav-actions">
-          {/* Desktop Full CTA */}
+        {/* Action Header Button & Mobile Toggle */}
+        <div className="nav-action-wrap">
           <button 
             type="button" 
-            onClick={() => scrollTo('intake')}
-            className="btn-primary-athletic nav-cta-btn desktop-only"
+            onClick={() => scrollTo('contact')}
+            className="btn-apply-header desktop-only"
           >
-            <img src={ASSETS.navWorkFlag} alt="" className="nav-flag-icon" />
-            <span>WORK WITH KEYNGDOM</span>
-          </button>
-          
-          {/* Avatar Icon Button */}
-          <button 
-            type="button" 
-            className="nav-avatar-btn" 
-            title="Athlete Portal / Profile"
-            onClick={() => onOpenDossier && onOpenDossier()}
-            aria-label="Athlete Profile Portal"
-          >
-            <img src={ASSETS.navUserAvatar} alt="" className="nav-avatar-icon" />
+            <span>APPLY FOR DEVELOPMENT</span>
+            <img src={ASSETS.navCtaArrow} alt="" className="nav-btn-icon" />
           </button>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Hamburger Button */}
           <button
             type="button"
             className={`mobile-hamburger ${mobileMenuOpen ? 'active' : ''}`}
@@ -141,7 +141,7 @@ export default function Navbar({ onOpenDossier }) {
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="mobile-drawer animate-slide-down">
           {NAV_ITEMS.map((item) => (
@@ -157,14 +157,13 @@ export default function Navbar({ onOpenDossier }) {
               {item.label}
             </a>
           ))}
-          
           <button 
             type="button" 
-            onClick={() => scrollTo('intake')}
-            className="btn-primary-athletic mobile-drawer-cta"
+            onClick={() => scrollTo('contact')}
+            className="btn-apply-header mobile-drawer-btn"
           >
-            <img src={ASSETS.navWorkFlag} alt="" className="nav-flag-icon" />
-            <span>WORK WITH KEYNGDOM</span>
+            <span>APPLY FOR DEVELOPMENT</span>
+            <img src={ASSETS.navCtaArrow} alt="" className="nav-btn-icon" />
           </button>
         </div>
       )}

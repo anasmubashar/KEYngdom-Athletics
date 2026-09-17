@@ -1,93 +1,73 @@
 import React from 'react';
 import { ASSETS } from '../assets';
 
+const PILLARS_PROGRAMS = [
+  {
+    step: '01 / BIOMECHANICAL OPTIMIZATION',
+    title: 'LASER KINEMATICS & SPEED MECHANICS',
+    desc: 'Sub-second sprint deceleration, high-point tracking, and ground reaction force conditioning to unlock raw speed without injury.',
+  },
+  {
+    step: '02 / POSITIONAL FILM IQ',
+    title: 'CLASSROOM SCHEME & TACTICAL LITERACY',
+    desc: 'Recruiters sign athletes who see the game before the snap or whistle. Weekly digital whiteboard sessions translate directly to live-game execution.',
+  },
+  {
+    step: '03 / DIRECT COLLEGIATE ADVOCACY',
+    title: 'VERIFIED HUDL PACKAGES & COACH OUTREACH',
+    desc: 'Direct positioning into Power 4, Group of 5, Ivy, and national programs with complete NCAA Core-16 GPA verification.',
+  },
+];
+
 export default function PhilosophySection() {
   return (
-    <section id="who-we-are" className="philosophy-section">
+    <section id="philosophy" className="philosophy-section-redesign">
       <div className="site-container">
         {/* Section Header */}
-        <div className="section-header-split">
-          <div className="section-title-wrap">
-            <div className="mono-tag">
-              <img src={ASSETS.tagPhilosophy} alt="" className="mono-tag-icon" />
-              <span>INSTITUTIONAL PHILOSOPHY</span>
-            </div>
-            <h2 className="section-title">BEYOND THE WORKOUT</h2>
+        <div className="philosophy-header-wrap">
+          <div className="philosophy-title-block">
+            <span className="section-mono-kicker">THE PHILOSOPHY</span>
+            <h2 className="philosophy-heading">
+              BEYOND REPS. ATHLETIC<br />ARCHITECTURE.
+            </h2>
           </div>
-          <div className="section-lead-wrap">
-            <p className="section-lead text-gold">More than reps. A complete athletic architecture.</p>
-          </div>
+
         </div>
 
-        {/* 2-Column Grid */}
-        <div className="philosophy-grid">
-          {/* Left Column: Narrative & Deliverables */}
-          <div className="philosophy-card narrative-card">
-            <div className="diagnostic-badge">
-              <span>DIAGNOSTIC REALITY CHECK</span>
-            </div>
+        {/* Asymmetric Editorial Showcase: Media Left + Pillars Right */}
+        <div className="philosophy-showcase-grid">
+          {/* Left: Media Showcase Column */}
+          <div className="philosophy-media-col">
+            <div className="philosophy-media-wrapper">
+              <img
+                src={ASSETS.coachTabletFilm}
+                alt="KEYngdom coach and athlete reviewing game film on tablet"
+                className="philosophy-film-img"
+              />
+              <div className="philosophy-film-gradient" />
 
-            <h3 className="narrative-heading">
-              THE WIDENING CHASM BETWEEN HIGH SCHOOL PRODUCTION AND COLLEGIATE STANDARDS
-            </h3>
-
-            <div className="narrative-body">
-              <p>
-                Every year, thousands of talented youth and high school athletes are overlooked. The cause is rarely lack of effort—it is an antiquated development system that prioritizes isolated gym sets over integrated collegiate preparation.
-              </p>
-              <p>
-                KEYngdom bridges this critical gap. We refuse to run generic workouts. Instead, our athletes train inside a collegiate-grade ecosystem integrating kinematic breakdown, situational game intelligence, academic rigor, and targeted college recruiting advocacy.
-              </p>
-            </div>
-
-            {/* 4-Item Deliverables Matrix */}
-            <div className="deliverable-matrix">
-              <div className="deliverable-box">
-                <span className="deliverable-code">01 / BIOMECHANICS</span>
-                <p className="deliverable-text">Kinematic video capture &amp; injury prevention models.</p>
-              </div>
-
-              <div className="deliverable-box">
-                <span className="deliverable-code">02 / FILM IQ</span>
-                <p className="deliverable-text">Classroom scheme analysis and tactical situational mastery.</p>
-              </div>
-
-              <div className="deliverable-box">
-                <span className="deliverable-code">03 / CHARACTER</span>
-                <p className="deliverable-text">Habit discipline, academic accountability, mental poise.</p>
-              </div>
-
-              <div className="deliverable-box">
-                <span className="deliverable-code">04 / RECRUITMENT</span>
-                <p className="deliverable-text">Direct coach outreach, NCAA registry, portfolio packaging.</p>
+              {/* Floating Glassmorphic Badge */}
+              <div className="film-floating-badge">
+                <div className="badge-meta-row">
+                  <span className="badge-meta-tag">COLLEGIATE FILM ROOM PROTOCOL</span>
+                  <span className="badge-meta-session">SESSION: 1-ON-1 IQ</span>
+                </div>
+                <div className="badge-title">
+                  MENTORSHIP DRIVEN BY FORMER NCAA CHAMPIONSHIP COMPETITORS
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Photo Showcase with Mentorship Overlay */}
-          <div className="philosophy-showcase-card">
-            <div className="showcase-img-wrap">
-              <img
-                src={ASSETS.coachTabletAnalysis}
-                alt="KEYngdom coach and athlete analyzing digital playbook tablet in training weightroom"
-                className="showcase-img"
-              />
-              <div className="showcase-gradient" />
-
-              {/* Bottom Floating Sleek Card */}
-              <div className="showcase-overlay-card">
-                <div className="overlay-card-header">
-                  <span className="overlay-meta">FIELD-LEVEL MENTORSHIP</span>
-                  <span className="protocol-badge">PROTOCOL</span>
-                </div>
-
-                <h4 className="overlay-title">Mentor &amp; Mentee Development Model</h4>
-
-                <p className="overlay-desc">
-                  Direct peer-to-mentor interaction with former NCAA championship-caliber athletes. Real-time tablet evaluation, footwork correction, and mental conditioning before, during, and after competitive reps.
-                </p>
+          {/* Right: Structured Timeline & Pillars */}
+          <div className="philosophy-pillars-col">
+            {PILLARS_PROGRAMS.map((pillar, idx) => (
+              <div key={idx} className="philosophy-pillar-card">
+                <span className="pillar-step-kicker">{pillar.step}</span>
+                <h3 className="pillar-card-title">{pillar.title}</h3>
+                <p className="pillar-card-desc">{pillar.desc}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

@@ -2,102 +2,81 @@ import React from 'react';
 import { ASSETS } from '../assets';
 
 export default function Footer() {
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const yOffset = -75;
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
   return (
-    <footer className="site-footer">
+    <footer className="streamlined-footer">
       <div className="site-container">
-        {/* Main 4-Column Grid */}
-        <div className="footer-grid">
-          {/* Column 1: Brand & Accreditation */}
-          <div className="footer-col brand-col">
-            <div className="footer-brand">
-              <img src={ASSETS.logo} alt="KEYngdom Logo" className="footer-logo-img" />
-              <div className="footer-brand-title">
-                <span className="footer-brand-name">KEYNGDOM</span>
-                <span className="footer-brand-sub">ATHLETICS</span>
-              </div>
-            </div>
-
-            <p className="footer-mission-text">
-              Forging elite athletes through discipline, technical training, and collegiate advocacy. We bridge the critical gap between grassroots youth performance &amp; collegiate recruitment.
-            </p>
-
-            <div className="accreditation-block">
-              <span className="accreditation-label">VERIFIED ACCREDITATION</span>
-              <div className="accreditation-badges">
-                <span className="accreditation-pill">NCAA ELIGIBILITY APPROVED</span>
-                <span className="accreditation-pill">USATF CERTIFIED</span>
-              </div>
-            </div>
+        {/* Top Row with Logo, Quick Links, Compliance Tag */}
+        <div className="footer-top-row">
+          {/* Logo */}
+          <div className="footer-brand">
+            <img src={ASSETS.logoCrestFooter} alt="KEYngdom Crest" className="footer-crest-img" />
+            <span className="footer-brand-text">
+              KEY<span className="footer-gold">NGDOM</span> ATHLETICS
+            </span>
           </div>
 
-          {/* Column 2: Programs */}
-          <div className="footer-col">
-            <h4 className="footer-heading">PROGRAMS</h4>
-            <ul className="footer-links-list">
-              <li><a href="#services">Sports Training</a></li>
-              <li><a href="#services">Dedicated Coaching</a></li>
-              <li><a href="#services">1-on-1 Mentoring</a></li>
-              <li><a href="#services">College Advocacy</a></li>
-              <li><a href="#services">Summer Camps</a></li>
-            </ul>
-          </div>
+          {/* Quick Links */}
+          <nav className="footer-quick-links" aria-label="Footer Quick Links">
+            <button
+              type="button"
+              onClick={() => scrollTo('philosophy')}
+              className="footer-nav-btn"
+            >
+              PHILOSOPHY
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollTo('pillars')}
+              className="footer-nav-btn"
+            >
+              PILLARS
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollTo('athletes')}
+              className="footer-nav-btn"
+            >
+              ROSTER
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollTo('contact')}
+              className="footer-nav-btn"
+            >
+              ADMISSIONS
+            </button>
+          </nav>
 
-          {/* Column 3: Athlete Resources */}
-          <div className="footer-col">
-            <h4 className="footer-heading">ATHLETE RESOURCES</h4>
-            <ul className="footer-links-list">
-              <li><a href="#featured-athletes">Scouting Reports</a></li>
-              <li><a href="#featured-athletes">Combine Metrics</a></li>
-              <li><a href="#intake">NIL Readiness</a></li>
-              <li><a href="#overview">Recruiting Calendar</a></li>
-              <li><a href="#who-we-are">Biomechanics Lab</a></li>
-            </ul>
-          </div>
-
-          {/* Column 4: Direct Contact */}
-          <div className="footer-col contact-col">
-            <h4 className="footer-heading">DIRECT CONTACT</h4>
-            <div className="contact-items">
-              <div className="contact-line">
-                <img src={ASSETS.footerLocation} alt="" className="contact-icon" />
-                <span>National Training Facility HQ</span>
-              </div>
-              <div className="contact-line">
-                <img src={ASSETS.footerEmail} alt="" className="contact-icon" />
-                <a href="mailto:admissions@keyngdomathletics.com">admissions@keyngdomathletics.com</a>
-              </div>
-              <div className="contact-line">
-                <img src={ASSETS.footerPhone} alt="" className="contact-icon" />
-                <span>+1 (800) 539-6436</span>
-              </div>
-            </div>
-
-            <div className="footer-social-wrap">
-              <span className="social-label">NETWORK CONNECT</span>
-              <div className="social-links">
-                <a href="#twitter" aria-label="X / Twitter" className="social-btn">
-                  <img src={ASSETS.socialTwitter} alt="" className="social-icon" />
-                </a>
-                <a href="#instagram" aria-label="Instagram" className="social-btn">
-                  <img src={ASSETS.socialInstagram} alt="" className="social-icon" />
-                </a>
-                <a href="#youtube" aria-label="YouTube" className="social-btn">
-                  <img src={ASSETS.socialYoutube} alt="" className="social-icon" />
-                </a>
-              </div>
-            </div>
+          {/* Compliance Tag */}
+          <div className="footer-compliance-tag">
+            NCAA COMPLIANCE CERTIFIED • EST. 2024
           </div>
         </div>
 
-        {/* Footer Bottom Bar */}
-        <div className="footer-bottom-bar">
-          <span className="copyright-text">
-            &copy; 2024 KEYNGDOM ATHLETICS LLC. ALL RIGHTS RESERVED.
-          </span>
-          <div className="legal-links">
-            <a href="#privacy">PRIVACY POLICY</a>
-            <a href="#terms">TERMS OF SERVICE</a>
-            <a href="#conduct">ATHLETIC CODE OF CONDUCT</a>
+        {/* Bottom Row with Legal Copyright & Links */}
+        <div className="footer-legal-row">
+          <div className="footer-copyright">
+            © 2025 KEYngdom Athletics Inc. All Elite Rights Reserved.
+          </div>
+          <div className="footer-legal-links">
+            <a href="#privacy" onClick={(e) => e.preventDefault()} className="footer-legal-link">
+              Privacy Policy
+            </a>
+            <a href="#terms" onClick={(e) => e.preventDefault()} className="footer-legal-link">
+              Amateurism Terms
+            </a>
+            <a href="#conduct" onClick={(e) => e.preventDefault()} className="footer-legal-link">
+              Code of Conduct
+            </a>
           </div>
         </div>
       </div>
