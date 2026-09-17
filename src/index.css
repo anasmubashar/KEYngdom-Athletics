@@ -71,6 +71,11 @@ body {
   overflow-x: hidden;
 }
 
+/* Offset-aware anchor scrolling */
+section {
+  scroll-margin-top: 75px;
+}
+
 /* Common Layout Container */
 .site-container {
   width: 100%;

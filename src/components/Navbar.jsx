@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { ASSETS } from '../assets';
 
+const NAV_ITEMS = [
+  { id: 'overview', label: 'OVERVIEW' },
+  { id: 'who-we-are', label: 'WHO WE ARE' },
+  { id: 'services', label: 'SERVICES' },
+  { id: 'approach', label: 'THE APPROACH' },
+  { id: 'featured-athletes', label: 'FEATURED ATHLETES' },
+  { id: 'contact', label: 'CONTACT' },
+];
+
 export default function Navbar({ onOpenDossier }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('overview');
 
   // Close mobile menu on resize to desktop
   useEffect(() => {
@@ -15,11 +25,47 @@ export default function Navbar({ onOpenDossier }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Scroll spy: detect which section is in view on scroll
+  useEffect(() => {
+    const sectionIds = NAV_ITEMS.map((item) => item.id);
+
+    const handleScroll = () => {
+      // If user has scrolled near bottom of page, activate contact section
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 80) {
+        setActiveSection('contact');
+        return;
+      }
+
+      const headerOffset = 180; // trigger point slightly below sticky header
+      let currentActive = 'overview';
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= headerOffset) {
+            currentActive = id;
+          }
+        }
+      }
+
+      setActiveSection(currentActive);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // run once on mount
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollTo = (id) => {
+    setActiveSection(id);
     setMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const yOffset = -70; // header height offset
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
@@ -41,14 +87,21 @@ export default function Navbar({ onOpenDossier }) {
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links with Active Scroll Spy */}
         <nav className="desktop-nav" aria-label="Main Navigation">
-          <a href="#overview" onClick={(e) => { e.preventDefault(); scrollTo('overview'); }} className="nav-link active">OVERVIEW</a>
-          <a href="#who-we-are" onClick={(e) => { e.preventDefault(); scrollTo('who-we-are'); }} className="nav-link">WHO WE ARE</a>
-          <a href="#services" onClick={(e) => { e.preventDefault(); scrollTo('services'); }} className="nav-link">SERVICES</a>
-          <a href="#approach" onClick={(e) => { e.preventDefault(); scrollTo('approach'); }} className="nav-link">THE APPROACH</a>
-          <a href="#featured-athletes" onClick={(e) => { e.preventDefault(); scrollTo('featured-athletes'); }} className="nav-link">FEATURED ATHLETES</a>
-          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollTo('contact'); }} className="nav-link">CONTACT</a>
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo(item.id);
+              }}
+              className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
 
         {/* Action Controls */}
@@ -91,12 +144,19 @@ export default function Navbar({ onOpenDossier }) {
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
         <div className="mobile-drawer animate-slide-down">
-          <a href="#overview" onClick={(e) => { e.preventDefault(); scrollTo('overview'); }} className="mobile-link">OVERVIEW</a>
-          <a href="#who-we-are" onClick={(e) => { e.preventDefault(); scrollTo('who-we-are'); }} className="mobile-link">WHO WE ARE</a>
-          <a href="#services" onClick={(e) => { e.preventDefault(); scrollTo('services'); }} className="mobile-link">SERVICES</a>
-          <a href="#approach" onClick={(e) => { e.preventDefault(); scrollTo('approach'); }} className="mobile-link">THE APPROACH</a>
-          <a href="#featured-athletes" onClick={(e) => { e.preventDefault(); scrollTo('featured-athletes'); }} className="mobile-link">FEATURED ATHLETES</a>
-          <a href="#contact" onClick={(e) => { e.preventDefault(); scrollTo('contact'); }} className="mobile-link">CONTACT</a>
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo(item.id);
+              }}
+              className={`mobile-link ${activeSection === item.id ? 'active' : ''}`}
+            >
+              {item.label}
+            </a>
+          ))}
           
           <button 
             type="button" 
